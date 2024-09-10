@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,inital-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    
+    
+    <header>
+      <h2 class="logo">Yippeeee:3</h2>
+      <nav class="navigation">
+        <a href="#">Home</a>
+        <a href="#">About us</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <button class="btnLogin-popup">Login</button>
+      </nav>
+    </header>
+    <form action="connect .php" method="post">
+    <div class="wrapper">
+      <span class="icon-close"><ion-icon name="close"></ion-icon>
+      </span>
+      <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#">
+          <div class="input-box">
+            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+            <input type="email" id="email" name="email" required />
+            <label>email</label>
+          </div>
+          <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+            <input type="password" id="password" name="password" required />
+            <label>password</label>
+          </div>
+          <div class="remember-forgot">
+            <label><input type="checkbox" />
+              Remember me </label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <div class="login-register">
+            <p>
+              Don't have an account?<a href="#" class="register-link"><br>Register</a>
+            </p>
+          </div>
+        </form>
+      </form>
+      </div>
+      <div class="form-box register">
+        <h2>Registration</h2>
+        <form action="#">
+          <form action="#">
+            <div class="input-box">
+              <?php
+              
+              $uername = $_POST["username"];
+              $email = $_POST["email"];
+              $password = $_POST["password"];
+              $conn = new mysqli("localhost","root","","test");
+              if($conn->connect_error){
+                  die("Connection failed : " .$conn->connect_error);
+              }else{
+                  $stmt = $conn->prepare("insert into registration(username , email , password )
+                  values(? ,?, ?)");
+                  $stmt->bind_param("sss",$uername , $email ,$password );
+                  $stmt->execute();
+                  echo "registration succesfull...";
+                  $stmt ->close();
+                  $conn ->close();
+              }
+              
+              ?>
+    <form action="connect .php" method="post">
+              
+             <span class="icon"><ion-icon name="person"></ion-icon></span>
+              <input type="text" id="username" name="username" required />
+              <label>Username</label>
+            </div>
+          <div class="input-box">
+            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+            <input type="email" id="eamil" name="email" required />
+            <label>email</label>
+          </div>
+          <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+            <input type="password" id="password" name="password"required />
+            <label>password</label>
+          </div>
+          <div class="remember-forgot">
+            <label><input type="checkbox" id="remember" name="remeber" />
+              I agree to the terms & conditions </label>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <div class="login-register">
+            <p>
+              Already have an account?<a href="#" class="login-link"><br>login</a>
+            </p>
+          </div>
+        </form>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        Array.from(document.getElementsByTagName("input")).forEach((input) => {
+          if (!["password", "email", "text"].includes(input.type)) return;
+
+          input.addEventListener("change", (e) => {
+            if (!input.value) return input.classList.remove("filled");
+            if (input.classList.contains("filled")) return;
+
+            input.classList.add("filled");
+          });
+        });
+      });
+      
+    </script>
+    
+    <script src="script.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
+  </script>
+  </body>
+</html>
